@@ -16,6 +16,7 @@ const PaginationMarketCard = ({cardsInfo}:props) => {
     const [pagesCount , setPagesCount] = useState<number|null>(null)
 
     useEffect(()=>{
+        setPage(1)
         setPagesCount(Math.ceil(cardsInfo.length/10))
     },[cardsInfo])
 

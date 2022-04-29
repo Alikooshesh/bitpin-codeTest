@@ -20,6 +20,10 @@ const Home = () => {
     },[markets])
 
     useEffect(() => {
+        refreshData()
+    }, [])
+
+    const refreshData = () => {
         setIsloading(true)
         axios.get('https://api.bitpin.ir/v1/mkt/markets/')
             .then(data => {
@@ -41,7 +45,7 @@ const Home = () => {
             console.log(err)
             setErr('something is wrong ...')
         })
-    }, [])
+    }
 
     return (
         <div className={'p-16 flex flex-col items-center justify-center'}>
