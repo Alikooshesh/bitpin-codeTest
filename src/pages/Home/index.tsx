@@ -1,4 +1,3 @@
-import MarketCard from "../../components/cards/marketCard";
 import {useEffect, useState} from "react";
 import {ImarketCard} from "../../interface/global";
 import axios from 'axios'
@@ -10,10 +9,15 @@ const Home = () => {
     const favMarkets = useSelector((state: any) => state.favMarket.favMarkets)
 
     const [isLoading, setIsloading] = useState<boolean>(false)
+    const [err,setErr] =  useState<string|null>(null)
 
     const [markets, setMarkets] = useState<ImarketCard[] | null>(null)
 
     const [showFavList, setShowFavList] = useState<boolean>(false)
+
+    useEffect(()=>{
+        markets?.length === 0 ? setErr('data is empty') : setErr(null)
+    },[markets])
 
     useEffect(() => {
         setIsloading(true)
@@ -33,13 +37,16 @@ const Home = () => {
                     marketList.push(newMarket)
                 })
                 setMarkets(marketList)
-            })
+            }).catch(err => {
+            console.log(err)
+            setErr('something is wrong ...')
+        })
     }, [])
 
     return (
         <div className={'p-16 flex flex-col items-center justify-center'}>
             {isLoading && <h1>Is Loading ...</h1>}
-            {!isLoading && !markets?.length && <h1>Data is empty</h1>}
+            {!isLoading && err && <h1>{err}</h1>}
             {!isLoading && markets?.length &&
             <>
                 <button
