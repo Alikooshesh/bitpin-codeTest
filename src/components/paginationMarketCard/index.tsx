@@ -16,8 +16,7 @@ const PaginationMarketCard = ({cardsInfo}:props) => {
     const [pagesCount , setPagesCount] = useState<number|null>(null)
 
     useEffect(()=>{
-        const divisBy10 = cardsInfo.length % 10
-        setPagesCount(divisBy10 ? cardsInfo.length / 10 : (cardsInfo.length / 10)+1)
+        setPagesCount(Math.ceil(cardsInfo.length/10))
     },[cardsInfo])
 
     return(
@@ -43,7 +42,7 @@ const PaginationMarketCard = ({cardsInfo}:props) => {
                     onClick={()=> page !== 1 && setPage(page-1)}
                     className={page !== 1 ? "cursor-pointer" : ""}
                 />
-                <p>{page}</p>
+                <p>{page} from {pagesCount} pages</p>
                 <ArrowRight2
                     size="32"
                     color={page !== pagesCount ? "#FF8A65" : "#545252"}
